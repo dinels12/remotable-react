@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { Component } from "react";
-import "../App.css";
 import { Spinner } from "react-bootstrap";
+import "../App.css";
 import { VictoryPie, VictoryLabel } from "victory";
 
 export default class User extends Component {
