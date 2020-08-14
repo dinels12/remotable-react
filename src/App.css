@@ -57,7 +57,7 @@ body {
 }
 
 .fontP {
-  opacity: 70%;
+  opacity: 70% !important;
   font-weight: 300;
   font-size: 1.8rem;
 }

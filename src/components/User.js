@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { Component } from "react";
-import { Spinner } from "react-bootstrap";
+import { Spinner, Table } from "react-bootstrap";
 import "../App.css";
 import { VictoryPie, VictoryLabel } from "victory";
 
@@ -14,7 +14,13 @@ export default class User extends Component {
     total: "",
     loading: true,
     metric: 0,
+    status: "offline",
   };
+
+  constructor(props) {
+    super(props);
+    this.statusCheck = React.createRef();
+  }
 
   async componentDidMount() {
     const id = localStorage.getItem("_id");
@@ -24,7 +30,15 @@ export default class User extends Component {
         .get("https://desition.herokuapp.com/api/user/" + id)
         .catch((err) => {
           if (err) {
-            window.location.reload();
+            this.setState({
+              _id: localStorage.getItem("_id"),
+              Hours: localStorage.getItem("hours"),
+              update: localStorage.getItem("update"),
+              payout: localStorage.getItem("payout"),
+              loading: false,
+              metric: localStorage.getItem("metric"),
+            });
+            this.statusOff();
           }
         });
       document.body.classList.remove("bg-success");
@@ -41,7 +55,14 @@ export default class User extends Component {
             res.data.lastWeek[0].bonus +
             res.data.lastWeek[0].extra
         ),
+        status: "Online",
       });
+      localStorage.setItem("hours", this.state.Hours);
+      localStorage.setItem("payout", this.state.payout);
+      localStorage.setItem("loading", this.state.loading);
+      localStorage.setItem("update", this.state.update);
+      localStorage.setItem("metric", this.state.metric);
+      this.statusOn();
     } else window.location.reload();
   }
 
@@ -51,6 +72,15 @@ export default class User extends Component {
 
   por(x) {
     return (x / 40) * 100;
+  }
+
+  statusOff() {
+    this.statusCheck.current.classList.remove("text-success");
+    this.statusCheck.current.classList.add("text-danger");
+  }
+  statusOn() {
+    this.statusCheck.current.classList.remove("text-danger");
+    this.statusCheck.current.classList.add("text-success");
   }
 
   render() {
@@ -82,8 +112,11 @@ export default class User extends Component {
         <div className='row'>
           <div id='hoursTable' className='col m-auto'>
             <div className='card remoColor'>
-              <div className='card-header'>
+              <div className='card-header d-flex justify-content-between align-content-center'>
                 <h1>Remotask Plus</h1>
+                <span ref={this.statusCheck} className='text-danger'>
+                  {this.state.status}
+                </span>
               </div>
               <div id='preShow' className='card-body'>
                 <div id='SHOW' className='card remoColor'>
@@ -141,41 +174,48 @@ export default class User extends Component {
                             </h4>
                           </div>
                         </div>
-                        <div className='card-body'>
-                          <div className='alert alert-secondary'>
-                            <div className='d-flex justify-content-between align-items-center'>
-                              <div id='hours' className='mr-auto pr-2 fontw'>
-                                {this.dot(this.state.lastWeek.hours)}
-                                <br />
-                                <span>Horas</span>
-                              </div>
-                              <div id='quality' className='mr-auto pr-2 fontw'>
-                                {this.state.lastWeek.quality}
-                                <br />
-                                <span>Calidad</span>
-                              </div>
-                              <div id='speed' className='mr-auto pr-2 fontw'>
-                                {this.state.lastWeek.speed}
-                                <br />
-                                <span>Velocidad</span>
-                              </div>
-                              <div id='bonus' className='mr-auto pr-2 fontw'>
-                                {this.state.lastWeek.bonus}
-                                <br />
-                                <span>Bono</span>
-                              </div>
-                              <div id='extra' className='mr-auto pr-2 fontw'>
-                                {this.state.lastWeek.extra}
-                                <br />
-                                <span>Extra</span>
-                              </div>
-                              <div id='total' className='mr-auto pr-2 fontw'>
-                                {this.dot(this.state.total)}
-                                <br />
-                                <span>Total</span>
-                              </div>
-                            </div>
-                          </div>
+                        <div style={{ padding: 0 }} className='card-body'>
+                          <Table
+                            responsive='sm'
+                            striped
+                            bordered
+                            hover
+                            variant='dark'
+                            size='sm'
+                          >
+                            <thead>
+                              <tr>
+                                <th className='text-center'>Horas</th>
+                                <th className='text-center'>Calidad</th>
+                                <th className='text-center'>Speed</th>
+                                <th className='text-center'>Bonus</th>
+                                <th className='text-center'>Extra</th>
+                                <th className='text-center'>Total</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td className='text-center'>
+                                  {this.dot(this.state.lastWeek.hours)}
+                                </td>
+                                <td className='text-center'>
+                                  {this.state.lastWeek.quality}
+                                </td>
+                                <td className='text-center'>
+                                  {this.state.lastWeek.speed}
+                                </td>
+                                <td className='text-center'>
+                                  ${this.state.lastWeek.bonus}
+                                </td>
+                                <td className='text-center'>
+                                  ${this.state.lastWeek.extra}
+                                </td>
+                                <td className='text-center'>
+                                  ${this.state.total}
+                                </td>
+                              </tr>
+                            </tbody>
+                          </Table>
                         </div>
                       </div>
                     </div>
