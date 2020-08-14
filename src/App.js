@@ -1,26 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import UserInfo from "./components/User";
+import "bootstrap/dist/css/bootstrap.min.css";
+import GetUser from "./components/GetUser";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  let sesion = localStorage.getItem("_id");
+  if (sesion) {
+    return (
+      <Router>
+        <Route path='/' exact component={UserInfo} />
+      </Router>
+    );
+  } else {
+    return (
+      <Router>
+        <Route path='/' exact component={GetUser} />
+      </Router>
+    );
+  }
 }
 
 export default App;

@@ -1,38 +1,132 @@
-.App {
-  text-align: center;
+html,
+body {
+  width: 100%;
+  height: 100%;
+  color: white !important;
+}
+#root {
+  height: 100%;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  background: #eeeee5 !important;
+  /* background: #28a745 !important; */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+#preShow {
+  padding: 0 !important;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+#hoursTable {
+  padding: 0 !important;
+  margin: 0 !important;
+  min-height: 100% !important;
+}
+.card {
+  height: 100%;
+}
+.card .card-body {
+  height: 100%;
+}
+
+.container,
+.row {
+  min-width: 100% !important;
+  height: 100% !important;
+}
+
+.font {
+  font-size: 1.5rem;
+}
+
+.fontw {
+  font-size: 1.2rem;
+}
+
+.fontS {
+  font-weight: 500 !important;
+  font-size: 3rem !important;
+}
+
+.fontP {
+  opacity: 70%;
+  font-weight: 300;
+  font-size: 1.8rem;
+}
+#hello {
+  margin-top: 20%;
+}
+.hello {
+  overflow: hidden !important;
+}
+
+#status {
+  margin-top: 50%;
+}
+
+#error {
+  margin-top: 20%;
+}
+
+.remoColor {
+  color: white !important;
+  background: #29cd9c !important;
+}
+
+@media (max-width: 600px) {
+  #root {
+    height: 100%;
   }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+  #hello {
+    margin-top: 70%;
   }
-  to {
-    transform: rotate(360deg);
+
+  #error {
+    margin-top: 70%;
+  }
+
+  #status {
+    margin-top: 70%;
+  }
+  #formConsult {
+    min-width: 100% !important;
+    margin-top: 50% !important;
+  }
+  .card-header h1 {
+    font-size: 40px;
+  }
+  #hoursTable {
+    padding: 0 !important;
+    margin: 0 !important;
+    min-height: 100% !important;
+  }
+  .card {
+    height: 100%;
+  }
+  .card .card-body {
+    height: 100%;
+  }
+  .container,
+  .row {
+    height: 100% !important;
+  }
+
+  h1 {
+    font-size: 50px;
+  }
+  .col-6 {
+    max-width: 100% !important;
+  }
+  .font {
+    font-size: 1.1rem;
+  }
+
+  .fontw {
+    font-size: 0.9rem;
   }
 }
