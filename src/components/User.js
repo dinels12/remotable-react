@@ -9,12 +9,12 @@ export default class User extends Component {
     _id: "",
     Hours: "",
     update: "",
-    lastWeek: [{}],
+    lastWeek: [{ bonus: "", extra: "", hours: "", quality: "", speed: "" }],
     payout: "",
     total: "",
     loading: true,
     metric: 0,
-    status: "offline",
+    status: "Offline",
   };
 
   constructor(props) {
@@ -46,15 +46,23 @@ export default class User extends Component {
         _id: res.data._id,
         Hours: this.dot(res.data.Hours),
         update: res.data.update,
-        lastWeek: res.data.lastWeek[0],
+        lastWeek: {
+          bonus: "$" + res.data.lastWeek[0].bonus,
+          extra: "$" + res.data.lastWeek[0].extra,
+          hours: this.dot(res.data.lastWeek[0].hours),
+          quality: res.data.lastWeek[0].quality,
+          speed: res.data.lastWeek[0].speed,
+        },
         payout: "$" + this.dot(res.data.Hours * 0.5),
         loading: false,
         metric: this.por(res.data.Hours),
-        total: this.dot(
-          res.data.lastWeek[0].hours * 0.5 +
-            res.data.lastWeek[0].bonus +
-            res.data.lastWeek[0].extra
-        ),
+        total:
+          "$" +
+          this.dot(
+            res.data.lastWeek[0].hours * 0.5 +
+              res.data.lastWeek[0].bonus +
+              res.data.lastWeek[0].extra
+          ),
         status: "Online",
       });
       localStorage.setItem("hours", this.state.Hours);
@@ -196,7 +204,7 @@ export default class User extends Component {
                             <tbody>
                               <tr>
                                 <td className='text-center'>
-                                  {this.dot(this.state.lastWeek.hours)}
+                                  {this.state.lastWeek.hours}
                                 </td>
                                 <td className='text-center'>
                                   {this.state.lastWeek.quality}
@@ -205,13 +213,13 @@ export default class User extends Component {
                                   {this.state.lastWeek.speed}
                                 </td>
                                 <td className='text-center'>
-                                  ${this.state.lastWeek.bonus}
+                                  {this.state.lastWeek.bonus}
                                 </td>
                                 <td className='text-center'>
-                                  ${this.state.lastWeek.extra}
+                                  {this.state.lastWeek.extra}
                                 </td>
                                 <td className='text-center'>
-                                  ${this.state.total}
+                                  {this.state.total}
                                 </td>
                               </tr>
                             </tbody>
