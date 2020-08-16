@@ -5,7 +5,6 @@ export default class GetUser extends Component {
   state = {
     _id: "",
     message: "Consultar",
-    loading: true,
   };
 
   constructor(props) {
