@@ -10,4 +10,4 @@ Asi de facil es usar la aplicacion.
 
 #### Version
 
-Version: 0.15
+Version: 1.0
