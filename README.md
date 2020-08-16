@@ -6,9 +6,8 @@ Projecto de uso personal para obtener los datos de Google Sheets de Remotasks Pl
 
 Paso 1: Coloca tu ID de Remotasks Plus.
 
-#
-
 Paso 2: Listo:)..
+
 Asi de facil es usar la aplicacion.
 
 #### Version
