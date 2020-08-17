@@ -86,6 +86,7 @@ export default class User extends Component {
     this.statusCheck.current.classList.remove("text-success");
     this.statusCheck.current.classList.add("text-danger");
   }
+
   statusOn() {
     this.statusCheck.current.classList.remove("text-danger");
     this.statusCheck.current.classList.add("text-success");

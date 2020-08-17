@@ -20,7 +20,7 @@ export default class GetUser extends Component {
     let id = localStorage.getItem("_id");
     if (id) {
       this.setState({ _id: id });
-      window.location.href = "/user";
+      window.location.href = "/";
     }
   }
 
@@ -28,6 +28,7 @@ export default class GetUser extends Component {
     this.message.current.classList.remove("btn-primary");
     this.message.current.classList.add("btn-danger");
   }
+
   messageLoading() {
     this.message.current.classList.remove("btn-danger");
     this.message.current.classList.remove("btn-primary");
