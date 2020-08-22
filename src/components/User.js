@@ -52,6 +52,7 @@ export default class User extends Component {
           hours: this.dot(res.data.lastWeek[0].hours),
           quality: res.data.lastWeek[0].quality,
           speed: res.data.lastWeek[0].speed,
+          payout: res.data.lastWeek[0].payout,
         },
         payout: "$" + this.dot(res.data.Hours * 0.5),
         loading: false,
@@ -177,10 +178,7 @@ export default class User extends Component {
                         <div className='card-header'>
                           <div className='d-flex justify-content-between align-items-center'>
                             <h4>Pago:</h4>
-                            <h4 id='lastweekP'>
-                              {" "}
-                              {this.state.lastWeek.payout}{" "}
-                            </h4>
+                            <h4 id='lastweekP'>{this.state.lastWeek.payout}</h4>
                           </div>
                         </div>
                         <div style={{ padding: 0 }} className='card-body'>
