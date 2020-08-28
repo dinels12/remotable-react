@@ -3,6 +3,23 @@ import React, { Component } from "react";
 import { Spinner, Table } from "react-bootstrap";
 import "../App.css";
 import { VictoryPie, VictoryLabel } from "victory";
+import firebase from "firebase/app";
+import "firebase/analytics";
+
+// Your web app's Firebase configuration
+var firebaseConfig = {
+  apiKey: "AIzaSyCyRJ3IcRz7KNCkwAYp0EdlHbK7cZmCI0o",
+  authDomain: "denialcode.firebaseapp.com",
+  databaseURL: "https://denialcode.firebaseio.com",
+  projectId: "denialcode",
+  storageBucket: "denialcode.appspot.com",
+  messagingSenderId: "337646377846",
+  appId: "1:337646377846:web:16b613177ebf31001a7857",
+  measurementId: "G-VKGEGC7FQ8",
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+firebase.analytics().logEvent("notification_received");
 
 export default class User extends Component {
   state = {
