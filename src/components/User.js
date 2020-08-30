@@ -20,7 +20,6 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-firebase.analytics().logEvent("User_Connected");
 
 export default class User extends Component {
   state = {
@@ -122,6 +121,7 @@ export default class User extends Component {
 
   onHide = async (valor) => {
     this.setState({ anuncios: valor });
+    firebase.analytics().logEvent("notification_received");
 
     const id = this.state._id;
 
