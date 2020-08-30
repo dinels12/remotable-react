@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { Component } from "react";
 import { Spinner, Table } from "react-bootstrap";
+import Anuncio from "./Anuncio";
 import "../App.css";
 import { VictoryPie, VictoryLabel } from "victory";
 import firebase from "firebase/app";
@@ -19,19 +20,21 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-firebase.analytics().logEvent("notification_received");
+firebase.analytics().logEvent("User_Connected");
 
 export default class User extends Component {
   state = {
     _id: "",
     Hours: "",
     update: "",
-    lastWeek: [{ bonus: "", extra: "", hours: "", quality: "", speed: "" }],
+    lastWeek: {},
     payout: "",
     total: "",
     loading: true,
     metric: 0,
     status: "Offline",
+    annoucements: {},
+    anuncios: false,
   };
 
   constructor(props) {
@@ -43,8 +46,9 @@ export default class User extends Component {
     const id = localStorage.getItem("_id");
     this.setState({ _id: id });
     if (id) {
+      // const res = await axios.get(`http://localhost:4000/api/user/${id}`);
       const res = await axios
-        .get("https://desition.herokuapp.com/api/user/" + id)
+        .get(`https://desition.herokuapp.com/api/user/${id}`)
         .catch((err) => {
           if (err) {
             this.setState({
@@ -58,6 +62,7 @@ export default class User extends Component {
             this.statusOff();
           }
         });
+
       document.body.classList.remove("bg-success");
       this.setState({
         _id: res.data._id,
@@ -70,17 +75,22 @@ export default class User extends Component {
           quality: res.data.lastWeek[0].quality,
           speed: res.data.lastWeek[0].speed,
           payout: res.data.lastWeek[0].payout,
+          total: res.data.lastWeek[0].total,
         },
         payout: "$" + this.dot(res.data.Hours * 0.5),
         loading: false,
         metric: this.por(res.data.Hours),
-        total:
-          "$" +
-          this.dot(
-            res.data.lastWeek[0].hours * 0.5 +
-              res.data.lastWeek[0].bonus +
-              res.data.lastWeek[0].extra
-          ),
+        total: `$${res.data.lastWeek[0].total}`,
+        anuncios: res.data.anuncios,
+        annoucements: {
+          title: res.data.annoucements[0].title,
+          body: res.data.annoucements[0].body,
+          author: res.data.annoucements[0].author,
+          extra: res.data.annoucements[0].extra,
+          number: res.data.annoucements[0].number,
+          urgent: res.data.annoucements[0].urgent,
+          date: res.data.annoucements[0].date,
+        },
         status: "Online",
       });
       localStorage.setItem("hours", this.state.Hours);
@@ -110,8 +120,17 @@ export default class User extends Component {
     this.statusCheck.current.classList.add("text-success");
   }
 
+  onHide = async (valor) => {
+    this.setState({ anuncios: valor });
+
+    const id = this.state._id;
+
+    await axios.put(`https://desition.herokuapp.com/api/annoucements/${id}`);
+  };
+
   render() {
-    const { loading } = this.state;
+    const { loading, anuncios, annoucements } = this.state;
+
     if (loading) {
       document.body.classList.add("bg-success");
       return (
@@ -133,9 +152,15 @@ export default class User extends Component {
         </div>
       );
     }
-
     return (
       <div id={this.state._id} className='container'>
+        {anuncios ? (
+          <Anuncio
+            show={anuncios}
+            list={annoucements}
+            onHide={() => this.onHide(false)}
+          />
+        ) : null}
         <div className='row'>
           <div id='hoursTable' className='col m-auto'>
             <div className='card remoColor'>

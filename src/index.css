@@ -1,0 +1,10 @@
+.modal-title {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center;
+  width: 100% !important;
+}
+
+.modal-footer {
+  justify-content: space-between !important;
+}
