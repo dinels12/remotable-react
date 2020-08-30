@@ -5,6 +5,7 @@ export default class GetUser extends Component {
   state = {
     _id: "",
     message: "Consultar",
+    redirect: false,
   };
 
   constructor(props) {
@@ -19,8 +20,7 @@ export default class GetUser extends Component {
   componentDidMount() {
     let id = localStorage.getItem("_id");
     if (id) {
-      this.setState({ _id: id });
-      window.location.href = "/";
+      this.setState({ _id: id, redirect: true });
     }
   }
 
@@ -54,17 +54,13 @@ export default class GetUser extends Component {
         if (message) {
           this.setState({ message: message });
           this.messageError();
-        } else if (err.request) {
-          console.log(err.request);
-        } else {
-          console.log("Error: ", err.message);
         }
       });
     if (res) {
       this.messageSuccess();
       this.setState({ message: "Usuario Conseguido" });
       localStorage.setItem("_id", res.data._id);
-      window.location.reload();
+      window.location.href = "/";
     }
   };
 

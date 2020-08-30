@@ -4,22 +4,7 @@ import { Spinner, Table } from "react-bootstrap";
 import Anuncio from "./Anuncio";
 import "../App.css";
 import { VictoryPie, VictoryLabel } from "victory";
-import firebase from "firebase/app";
-import "firebase/analytics";
-
-// Your web app's Firebase configuration
-var firebaseConfig = {
-  apiKey: "AIzaSyCyRJ3IcRz7KNCkwAYp0EdlHbK7cZmCI0o",
-  authDomain: "denialcode.firebaseapp.com",
-  databaseURL: "https://denialcode.firebaseio.com",
-  projectId: "denialcode",
-  storageBucket: "denialcode.appspot.com",
-  messagingSenderId: "337646377846",
-  appId: "1:337646377846:web:16b613177ebf31001a7857",
-  measurementId: "G-VKGEGC7FQ8",
-};
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+import { app } from "../FirebaseConfig";
 
 export default class User extends Component {
   state = {
@@ -121,11 +106,21 @@ export default class User extends Component {
 
   onHide = async (valor) => {
     this.setState({ anuncios: valor });
-    firebase.analytics().logEvent("notification_received");
+    app.analytics().logEvent("notification_received");
 
     const id = this.state._id;
 
     await axios.put(`https://desition.herokuapp.com/api/annoucements/${id}`);
+  };
+
+  logout = () => {
+    localStorage.removeItem("_id");
+    localStorage.removeItem("hours");
+    localStorage.removeItem("payout");
+    localStorage.removeItem("loading");
+    localStorage.removeItem("update");
+    localStorage.removeItem("metric");
+    window.location.href = "/";
   };
 
   render() {
@@ -165,7 +160,10 @@ export default class User extends Component {
           <div id='hoursTable' className='col m-auto'>
             <div className='card remoColor'>
               <div className='card-header d-flex justify-content-between align-content-center'>
-                <h1>Remotask Plus</h1>
+                <h3>Remotask Plus</h3>
+                <button className='btn btn-danger' onClick={this.logout}>
+                  Salir
+                </button>
                 <span ref={this.statusCheck} className='text-danger'>
                   {this.state.status}
                 </span>

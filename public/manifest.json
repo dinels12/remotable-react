@@ -24,6 +24,7 @@
   "background_color": "#eeeee5",
   "display": "fullscreen",
   "scope": "/",
+  "gcm_sender_id": "103953800507",
   "theme_color": "#29cd9c",
   "orientation": "portrait"
 }

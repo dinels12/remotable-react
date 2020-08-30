@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import UserInfo from "./components/User";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -9,10 +9,14 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
+import { preguntarPermisos } from "./FirebaseConfig";
 
 function App() {
-  let sesion = localStorage.getItem("_id");
+  useEffect(() => {
+    preguntarPermisos();
+  }, []);
 
+  let sesion = localStorage.getItem("_id");
   return (
     <Router>
       <Switch>
