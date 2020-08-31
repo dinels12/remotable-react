@@ -16,7 +16,6 @@ export const app = () => {
     measurementId: "G-VKGEGC7FQ8",
   });
 };
-firebase.analytics().logEvent("User_connected");
 
 export const preguntarPermisos = async () => {
   try {
