@@ -3,6 +3,7 @@
 import * as firebase from "firebase/app";
 import "firebase/messaging";
 import "firebase/analytics";
+
 // Initialize Firebase
 export const app = () => {
   firebase.initializeApp({
@@ -41,5 +42,14 @@ export const preguntarPermisos = async () => {
     });
   } catch (error) {
     console.error(error);
+  }
+};
+
+export const Analytics = () => {
+  try {
+    const analytics = firebase.analytics();
+    analytics.logEvent("User_connected");
+  } catch (err) {
+    console.error(err);
   }
 };

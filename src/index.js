@@ -3,8 +3,9 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import { app } from "./FirebaseConfig";
+import { app, Analytics } from "./FirebaseConfig";
 app();
+Analytics();
 
 ReactDOM.render(
   <React.StrictMode>
