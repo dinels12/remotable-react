@@ -29,7 +29,6 @@ export default class User extends Component {
     const id = localStorage.getItem("_id");
     this.setState({ _id: id });
     if (id) {
-      // const res = await axios.get(`http://localhost:4000/api/user/${id}`);
       const res = await axios
         .get(`https://desition.herokuapp.com/api/user/${id}`)
         .catch((err) => {
@@ -45,25 +44,14 @@ export default class User extends Component {
             this.statusOff();
           }
         });
-
       document.body.classList.remove("bg-success");
       this.setState({
         _id: res.data._id,
         Hours: this.dot(res.data.Hours),
         update: res.data.update,
-        lastWeek: {
-          bonus: "$" + res.data.lastWeek[0].bonus,
-          extra: "$" + res.data.lastWeek[0].extra,
-          hours: this.dot(res.data.lastWeek[0].hours),
-          quality: res.data.lastWeek[0].quality,
-          speed: res.data.lastWeek[0].speed,
-          payout: res.data.lastWeek[0].payout,
-          total: res.data.lastWeek[0].total,
-        },
         payout: "$" + this.dot(res.data.Hours * 0.5),
         loading: false,
         metric: this.por(res.data.Hours),
-        total: `$${res.data.lastWeek[0].total}`,
         anuncios: res.data.anuncios,
         annoucements: {
           title: res.data.annoucements[0].title,
@@ -76,6 +64,20 @@ export default class User extends Component {
         },
         status: "Online",
       });
+      if (res.data.lastWeek[0]) {
+        this.setState({
+          total: `$${res.data.lastWeek[0].total}`,
+          lastWeek: {
+            bonus: "$" + res.data.lastWeek[0].bonus,
+            extra: "$" + res.data.lastWeek[0].extra,
+            hours: this.dot(res.data.lastWeek[0].hours),
+            quality: res.data.lastWeek[0].quality,
+            speed: res.data.lastWeek[0].speed,
+            payout: res.data.lastWeek[0].payout,
+            total: res.data.lastWeek[0].total,
+          },
+        });
+      }
       localStorage.setItem("hours", this.state.Hours);
       localStorage.setItem("payout", this.state.payout);
       localStorage.setItem("loading", this.state.loading);
