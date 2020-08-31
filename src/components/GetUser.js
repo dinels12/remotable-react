@@ -48,18 +48,16 @@ export default class GetUser extends Component {
     this.setState({ message: "Cargando" });
     this.messageLoading();
 
-    const res = await axios.get(
-      `http://localhost:4000/api/user/${this.state._id}`
-    );
-    // const res = await axios
-    //   .get("https://desition.herokuapp.com/api/user/" + this.state._id)
-    //   .catch((err) => {
-    //     const message = err.response.data.message;
-    //     if (message) {
-    //       this.setState({ message: message });
-    //       this.messageError();
-    //     }
-    //   });
+    
+    const res = await axios
+      .get("https://desition.herokuapp.com/api/user/" + this.state._id)
+      .catch((err) => {
+        const message = err.response.data.message;
+        if (message) {
+          this.setState({ message: message });
+          this.messageError();
+        }
+      });
     if (res) {
       this.messageSuccess();
       this.setState({ message: "Usuario Conseguido" });
