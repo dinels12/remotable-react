@@ -4,8 +4,6 @@ import { Spinner, Table } from "react-bootstrap";
 import Anuncio from "./Anuncio";
 import "../App.css";
 import { VictoryPie, VictoryLabel } from "victory";
-import { app } from "../FirebaseConfig";
-app.analytics().logEvent("User_connected");
 
 export default class User extends Component {
   state = {
@@ -107,7 +105,6 @@ export default class User extends Component {
 
   onHide = async (valor) => {
     this.setState({ anuncios: valor });
-    app.analytics().logEvent("notification_received");
 
     const id = this.state._id;
 
