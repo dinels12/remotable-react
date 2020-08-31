@@ -5,6 +5,7 @@ import Anuncio from "./Anuncio";
 import "../App.css";
 import { VictoryPie, VictoryLabel } from "victory";
 import { app } from "../FirebaseConfig";
+app.analytics().logEvent("User_connected");
 
 export default class User extends Component {
   state = {
