@@ -12,10 +12,6 @@ import {
 import { preguntarPermisos } from "./FirebaseConfig";
 
 function App() {
-  useEffect(() => {
-    preguntarPermisos();
-  }, []);
-
   let sesion = localStorage.getItem("_id");
   return (
     <Router>

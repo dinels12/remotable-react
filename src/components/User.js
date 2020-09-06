@@ -180,7 +180,7 @@ export default class User extends Component {
                           <div className='text-center fontP'>PAGO</div>
                         </div>
                       </div>
-                      <div className='m-auto'>
+                      <div className='m-auto respM380'>
                         <div className='container'>
                           <div className='fontS'>
                             <svg width={200} height={200}>

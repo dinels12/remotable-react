@@ -18,33 +18,6 @@ export const app = () => {
   });
 };
 
-export const preguntarPermisos = async () => {
-  try {
-    const messaging = firebase.messaging();
-
-    navigator.serviceWorker.ready.then(() => {
-      navigator.serviceWorker
-        .getRegistration("/service-worker.js")
-        .then(async (registration) => {
-          messaging.useServiceWorker(registration);
-
-          // await messaging.requestPermission();
-          await Notification.requestPermission().then(async (permission) => {
-            if (permission === "denied") {
-              return null;
-            } else if (permission === "default") {
-              return null;
-            }
-            const token = await messaging.getToken();
-            return token;
-          });
-        });
-    });
-  } catch (error) {
-    console.error(error);
-  }
-};
-
 export const Analytics = () => {
   try {
     const analytics = firebase.analytics();

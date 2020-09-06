@@ -132,3 +132,23 @@ body {
     font-size: 0.9rem;
   }
 }
+
+@media (max-width: 380px) {
+  .fontS {
+    font-weight: 500 !important;
+    font-size: 40px !important;
+  }
+  svg {
+    width: 100%;
+  }
+}
+
+@media (max-width: 360px) {
+  .fontS {
+    font-weight: 500 !important;
+    font-size: 34px !important;
+  }
+  svg {
+    width: 100%;
+  }
+}
