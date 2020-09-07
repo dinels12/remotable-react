@@ -16,3 +16,5 @@ ReactDOM.render(
 
 // ServiceWorker
 serviceWorker.register();
+
+// Proxima actualizacion, subscripcion de pago, y mejoras en el rendimiento, backup en tiempo real, etc
