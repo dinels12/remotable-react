@@ -1,7 +1,6 @@
 // @ts-check
 
 import * as firebase from "firebase/app";
-import "firebase/messaging";
 import "firebase/analytics";
 
 // Initialize Firebase
