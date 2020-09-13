@@ -182,13 +182,13 @@ export default class User extends Component {
   notFoundHide() {
     this.setState({ notFound: false });
     localStorage.removeItem("_id");
-    window.location.href = "/plans";
+    window.location.reload();
   }
 
   expiredHide() {
     this.setState({ expired: false });
     localStorage.removeItem("_id");
-    window.location.href = "/plans";
+    window.location.reload();
   }
 
   gestionHide() {
