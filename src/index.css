@@ -8,3 +8,17 @@
 .modal-footer {
   justify-content: space-between !important;
 }
+
+#chatra.chatra--side-bottom {
+  bottom: 57px !important;
+}
+#chatra {
+  max-height: calc(100% - 80px) !important;
+}
+
+@media (max-width: 600px) {
+  #chatra.chatra--visible {
+    visibility: hidden !important;
+    opacity: 1;
+  }
+}

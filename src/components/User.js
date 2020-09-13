@@ -1,9 +1,18 @@
 import axios from "axios";
 import React, { Component } from "react";
-import { Spinner, Table } from "react-bootstrap";
+import { Spinner, Table, Button } from "react-bootstrap";
 import Anuncio from "./Anuncio";
+import UserData from "./UserData";
 import "../App.css";
 import { VictoryPie, VictoryLabel } from "victory";
+import Expired from "./Expired";
+import NotFound from "./NotFound";
+const { development, production, token } = require("../environment");
+let web = development;
+if (process.env.NODE_ENV === "production") {
+  web = production;
+}
+// 5e737df650fb650032e31bae
 
 export default class User extends Component {
   state = {
@@ -18,6 +27,10 @@ export default class User extends Component {
     status: "Offline",
     annoucements: {},
     anuncios: false,
+    expired: false,
+    notFound: false,
+    data: {},
+    gestion: false,
   };
 
   constructor(props) {
@@ -27,63 +40,103 @@ export default class User extends Component {
 
   async componentDidMount() {
     const id = localStorage.getItem("_id");
+
     this.setState({ _id: id });
+
     if (id) {
       const res = await axios
-        .get(`https://desition.herokuapp.com/api/user/${id}`)
+        .get(`${web}/api/premium/${id}`, {
+          headers: {
+            token: token,
+          },
+        })
         .catch((err) => {
           if (err) {
-            this.setState({
-              _id: localStorage.getItem("_id"),
-              Hours: localStorage.getItem("hours"),
-              update: localStorage.getItem("update"),
-              payout: localStorage.getItem("payout"),
-              loading: false,
-              metric: localStorage.getItem("metric"),
-            });
-            this.statusOff();
+            const message = err.response.data.message;
+            if (message === "Membresia Expirada") {
+              localStorage.removeItem("hours");
+              localStorage.removeItem("update");
+              localStorage.removeItem("payout");
+              localStorage.removeItem("metric");
+              return this.setState({
+                message: message,
+                loading: true,
+                expired: true,
+              });
+            } else if (message === "Usuario no encontrado.") {
+              localStorage.removeItem("hours");
+              localStorage.removeItem("update");
+              localStorage.removeItem("payout");
+              localStorage.removeItem("metric");
+              return this.setState({
+                message: message,
+                loading: true,
+                notFound: true,
+              });
+            } else {
+              this.setState({
+                _id: localStorage.getItem("_id"),
+                Hours: localStorage.getItem("hours"),
+                update: localStorage.getItem("update"),
+                payout: localStorage.getItem("payout"),
+                loading: false,
+                metric: localStorage.getItem("metric"),
+              });
+              this.statusOff();
+            }
           }
         });
-      document.body.classList.remove("bg-success");
-      this.setState({
-        _id: res.data._id,
-        Hours: this.dot(res.data.Hours),
-        update: res.data.update,
-        payout: "$" + this.dot(res.data.Hours * 0.5),
-        loading: false,
-        metric: this.por(res.data.Hours),
-        anuncios: res.data.anuncios,
-        annoucements: {
-          title: res.data.annoucements[0].title,
-          body: res.data.annoucements[0].body,
-          author: res.data.annoucements[0].author,
-          extra: res.data.annoucements[0].extra,
-          number: res.data.annoucements[0].number,
-          urgent: res.data.annoucements[0].urgent,
-          date: res.data.annoucements[0].date,
-        },
-        status: "Online",
-      });
-      if (res.data.lastWeek[0]) {
-        this.setState({
-          total: `$${res.data.lastWeek[0].total}`,
-          lastWeek: {
-            bonus: "$" + res.data.lastWeek[0].bonus,
-            extra: "$" + res.data.lastWeek[0].extra,
-            hours: this.dot(res.data.lastWeek[0].hours),
-            quality: res.data.lastWeek[0].quality,
-            speed: res.data.lastWeek[0].speed,
-            payout: res.data.lastWeek[0].payout,
-            total: res.data.lastWeek[0].total,
-          },
-        });
+      if (res) {
+        const user = res.data.user;
+        const data = res.data.data;
+        if (user._id) {
+          document.body.classList.remove("bg-success");
+          this.setState({
+            _id: user._id,
+            Hours: this.dot(user.Hours),
+            update: user.update,
+            payout: "$" + this.dot(user.Hours * 0.5),
+            loading: false,
+            metric: this.por(user.Hours),
+            anuncios: user.anuncios,
+            annoucements: {
+              title: user.annoucements[0].title,
+              body: user.annoucements[0].body,
+              author: user.annoucements[0].author,
+              extra: user.annoucements[0].extra,
+              number: user.annoucements[0].number,
+              urgent: user.annoucements[0].urgent,
+              date: user.annoucements[0].date,
+            },
+            status: "Online",
+            data: data,
+          });
+          if (user.lastWeek[0]) {
+            this.setState({
+              total: `$${user.lastWeek[0].total}`,
+              lastWeek: {
+                bonus: "$" + user.lastWeek[0].bonus,
+                extra: "$" + user.lastWeek[0].extra,
+                hours: this.dot(user.lastWeek[0].hours),
+                quality: user.lastWeek[0].quality,
+                speed: user.lastWeek[0].speed,
+                payout: user.lastWeek[0].payout,
+                total: user.lastWeek[0].total,
+              },
+            });
+          }
+
+          localStorage.setItem("hours", this.state.Hours);
+          localStorage.setItem("payout", this.state.payout);
+          localStorage.setItem("loading", this.state.loading);
+          localStorage.setItem("update", this.state.update);
+          localStorage.setItem("metric", this.state.metric);
+          this.statusOn();
+        } else if (localStorage.getItem("_id") === "undefined") {
+          localStorage.removeItem("_id");
+          window.location.reload();
+        }
       }
-      localStorage.setItem("hours", this.state.Hours);
-      localStorage.setItem("payout", this.state.payout);
-      localStorage.setItem("loading", this.state.loading);
-      localStorage.setItem("update", this.state.update);
-      localStorage.setItem("metric", this.state.metric);
-      this.statusOn();
     } else window.location.reload();
   }
 
@@ -101,8 +154,8 @@ export default class User extends Component {
   }
 
   statusOn() {
-    this.statusCheck.current.classList.remove("text-danger");
-    this.statusCheck.current.classList.add("text-success");
+    this.statusCheck.current.classList.remove("btn-danger");
+    this.statusCheck.current.classList.add("btn-success");
   }
 
   onHide = async (valor) => {
@@ -110,26 +163,59 @@ export default class User extends Component {
 
     const id = this.state._id;
 
-    await axios.put(`https://desition.herokuapp.com/api/annoucements/${id}`);
+    await axios.put(`${web}/api/annoucements/${id}`);
   };
 
   logout = () => {
-    localStorage.removeItem("_id");
-    localStorage.removeItem("hours");
-    localStorage.removeItem("payout");
-    localStorage.removeItem("loading");
-    localStorage.removeItem("update");
-    localStorage.removeItem("metric");
-    window.location.href = "/";
+    const conf = window.confirm("Cerrar sesion?");
+    if (conf) {
+      localStorage.removeItem("_id");
+      localStorage.removeItem("hours");
+      localStorage.removeItem("payout");
+      localStorage.removeItem("loading");
+      localStorage.removeItem("update");
+      localStorage.removeItem("metric");
+      window.location.reload();
+    }
   };
 
+  notFoundHide() {
+    this.setState({ notFound: false });
+    localStorage.removeItem("_id");
+    window.location.href = "/plans";
+  }
+
+  expiredHide() {
+    this.setState({ expired: false });
+    localStorage.removeItem("_id");
+    window.location.href = "/plans";
+  }
+
+  gestionHide() {
+    this.setState({ gestion: false });
+  }
+
   render() {
-    const { loading, anuncios, annoucements } = this.state;
+    const {
+      loading,
+      anuncios,
+      annoucements,
+      expired,
+      notFound,
+      gestion,
+      data,
+    } = this.state;
 
     if (loading) {
       document.body.classList.add("bg-success");
       return (
         <div id='hello' className='hello'>
+          {expired ? (
+            <Expired show={expired} onHide={() => this.expiredHide()} />
+          ) : null}
+          {notFound ? (
+            <NotFound show={notFound} onHide={() => this.notFoundHide()} />
+          ) : null}
           <div className='row'>
             <div className='col'>
               <h1
@@ -156,17 +242,30 @@ export default class User extends Component {
             onHide={() => this.onHide(false)}
           />
         ) : null}
+        {gestion ? (
+          <UserData
+            show={gestion}
+            data={data}
+            onHide={() => this.gestionHide()}
+          />
+        ) : null}
         <div className='row'>
           <div id='hoursTable' className='col m-auto'>
             <div className='card remoColor'>
               <div className='card-header d-flex justify-content-between align-content-center'>
-                <h3>Remotask Plus</h3>
+                <Button
+                  onClick={() => {
+                    this.setState({ gestion: true });
+                  }}
+                >
+                  Gestionar mi suscripción
+                </Button>
                 <button className='btn btn-danger' onClick={this.logout}>
                   Salir
                 </button>
-                <span ref={this.statusCheck} className='text-danger'>
+                <Button ref={this.statusCheck} className='text-white'>
                   {this.state.status}
-                </span>
+                </Button>
               </div>
               <div id='preShow' className='card-body'>
                 <div id='SHOW' className='card remoColor'>

@@ -8,7 +8,6 @@ export const app = () => {
   firebase.initializeApp({
     apiKey: "AIzaSyCyRJ3IcRz7KNCkwAYp0EdlHbK7cZmCI0o",
     authDomain: "denialcode.firebaseapp.com",
-    databaseURL: "https://denialcode.firebaseio.com",
     projectId: "denialcode",
     storageBucket: "denialcode.appspot.com",
     messagingSenderId: "337646377846",
