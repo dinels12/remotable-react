@@ -9,20 +9,22 @@
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/img/apple-touch-icon.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>RemoTable</title>
+    <script>
+      (function (d, w, c) {
+        w.ChatraID = "gLKW7wban26nc2w7R";
+        var s = d.createElement("script");
+        w[c] =
+          w[c] ||
+          function () {
+            (w[c].q = w[c].q || []).push(arguments);
+          };
+        s.async = true;
+        s.src = "https://call.chatra.io/chatra.js";
+        if (d.head) d.head.appendChild(s);
+      })(document, window, "Chatra");
+    </script>
   </head>
   <body>
     <div id="root"></div>
-    <script>
-    (function(d, w, c) {
-        w.ChatraID = 'gLKW7wban26nc2w7R';
-        var s = d.createElement('script');
-        w[c] = w[c] || function() {
-            (w[c].q = w[c].q || []).push(arguments);
-        };
-        s.async = true;
-        s.src = 'https://call.chatra.io/chatra.js';
-        if (d.head) d.head.appendChild(s);
-    })(document, window, 'Chatra');
-</script>
   </body>
 </html>
