@@ -15,9 +15,9 @@ export default class NavBar extends Component {
             <NavLink to='/calculator' className='nav-link'>
               Calculadora
             </NavLink>
-            <NavLink to='/plans' className='nav-link'>
+            {/* <NavLink to='/plans' className='nav-link'>
               Planes
-            </NavLink>
+            </NavLink> */}
           </Nav>
         </div>
       </Navbar>

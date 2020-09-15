@@ -26,44 +26,13 @@ export default class notFound extends Component {
       >
         <Modal.Header closeButton>
           <Modal.Title id='contained-modal-title-vcenter'>
-            <div>Unete a la comunidad de RemoTable!</div>
+            <div>Registros Cerrados!</div>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h4>
-            <strong>
-              <mark>
-                <em>
-                  <div>Solo por Septiembre!</div>
-                  <div>
-                    Paga $3 y te regalamos 1 mes de membresia, serian 4 meses de
-                    membresia por el precio de $3!
-                  </div>
-                </em>
-              </mark>
-            </strong>
-          </h4>
           <p>
-            Para poder usar esta aplicacion tienes que tener una membresia por
-            cada ID.
-          </p>
-          <p>
-            <small>
-              <mark>
-                Horario de soporte:{" "}
-                <strong>8:00 am a 5:00 pm Lunes a Viernes</strong>
-              </mark>
-            </small>
-          </p>
-          <p>
-            <small>
-              <mark>
-                <strong>
-                  Si tienes una duda o pregunta acerca de la plataforma, el
-                  equipo de RemoTable esta activo.
-                </strong>
-              </mark>
-            </small>
+            Registros cerrados, los usuarios ya registrados podran seguir
+            accediendo a la aplicacion.
           </p>
         </Modal.Body>
         <Modal.Footer>

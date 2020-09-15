@@ -27,9 +27,9 @@ function App() {
           <Route path='/calculator'>
             <Calculator />
           </Route>
-          <Route path='/plans'>
+          {/* <Route path='/plans'>
             <Prices />
-          </Route>
+          </Route> */}
           <Redirect to='/' />
         </Switch>
       </Router>
