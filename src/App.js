@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import UserInfo from "./components/User";
 import Calculator from "./components/ Calculator";
-import Prices from "./components/Prices";
+// import Prices from "./components/Prices";
 import "bootstrap/dist/css/bootstrap.min.css";
 import GetUser from "./components/GetUser";
 import Navbar from "./components/NavBar";
