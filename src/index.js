@@ -15,6 +15,4 @@ ReactDOM.render(
 );
 
 // ServiceWorker
-serviceWorker.unregister();
-
-// Proxima actualizacion, subscripcion de pago, y mejoras en el rendimiento, backup en tiempo real, etc
+serviceWorker.register();
