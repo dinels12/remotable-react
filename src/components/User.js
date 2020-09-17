@@ -73,17 +73,16 @@ export default class User extends Component {
                 loading: true,
                 notFound: true,
               });
-            } else {
-              this.setState({
-                _id: localStorage.getItem("_id"),
-                Hours: localStorage.getItem("hours"),
-                update: localStorage.getItem("update"),
-                payout: localStorage.getItem("payout"),
-                loading: false,
-                metric: localStorage.getItem("metric"),
-              });
-              this.statusOff();
             }
+            this.setState({
+              _id: localStorage.getItem("_id"),
+              Hours: localStorage.getItem("hours"),
+              update: localStorage.getItem("update"),
+              payout: localStorage.getItem("payout"),
+              loading: false,
+              metric: localStorage.getItem("metric"),
+            });
+            this.statusOff();
           }
         });
       if (res) {
