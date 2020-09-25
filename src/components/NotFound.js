@@ -26,15 +26,11 @@ export default class notFound extends Component {
       >
         <Modal.Header closeButton>
           <Modal.Title id='contained-modal-title-vcenter'>
-            <div>Registros Abiertos hasta el Sabado!</div>
+            <div>Registros Cerrados!</div>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>
-            Para registrarte en esta aplicacion, tienes que pagar $1 a esta
-            cuenta de Airtm: dinels12@gmail.com, recuerda incluir el ID en la
-            nota.
-          </p>
+          <p>Por los momentos tenemos los registros cerrados.</p>
         </Modal.Body>
         <Modal.Footer>
           <div>{moment(Date.now()).format("LL")}</div>
