@@ -5,6 +5,8 @@ import Calculator from "./components/ Calculator";
 // import Prices from "./components/Prices";
 import "bootstrap/dist/css/bootstrap.min.css";
 import GetUser from "./components/GetUser";
+import UserHistory from "./components/UserHistory";
+import UserStats from "./components/UserStats";
 import Navbar from "./components/NavBar";
 
 import {
@@ -40,6 +42,12 @@ function App() {
       <Switch>
         <Route exact path='/'>
           <UserInfo />
+        </Route>
+        <Route path='/history'>
+          <UserHistory />
+        </Route>
+        <Route path='/stats'>
+          <UserStats />
         </Route>
         <Redirect to='/' />
       </Switch>

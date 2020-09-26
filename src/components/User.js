@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { Component } from "react";
 import { Spinner, Table, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import Anuncio from "./Anuncio";
-import UserData from "./UserData";
+// import UserData from "./UserData";
 import "../App.css";
 import { VictoryPie, VictoryLabel } from "victory";
 import Expired from "./Expired";
@@ -201,8 +202,8 @@ export default class User extends Component {
       annoucements,
       expired,
       notFound,
-      gestion,
-      data,
+      // gestion,
+      // data,
     } = this.state;
 
     if (loading) {
@@ -241,24 +242,28 @@ export default class User extends Component {
             onHide={() => this.onHide(false)}
           />
         ) : null}
-        {gestion ? (
+        {/* {gestion ? (
           <UserData
             show={gestion}
             data={data}
             onHide={() => this.gestionHide()}
           />
-        ) : null}
+        ) : null} */}
         <div className='row'>
           <div id='hoursTable' className='col m-auto'>
             <div className='card remoColor'>
               <div className='card-header d-flex justify-content-between align-content-center'>
-                <Button
+                {/* <Button
                   onClick={() => {
                     this.setState({ gestion: true });
                   }}
                 >
                   Gestionar mi suscripción
-                </Button>
+                </Button> */}
+
+                <Link to='/history' className='btn btn-secondary'>
+                  Historial de pagos
+                </Link>
                 <button className='btn btn-danger' onClick={this.logout}>
                   Salir
                 </button>
