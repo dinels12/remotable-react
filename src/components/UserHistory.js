@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Table } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
 const { development, production, token } = require("../environment");
@@ -29,6 +29,7 @@ export default class UserHistory extends Component {
   }
 
   render() {
+    const { history } = this.state;
     return (
       <div id={this.state._id} className='container'>
         <div className='row'>
@@ -47,41 +48,89 @@ export default class UserHistory extends Component {
               </div>
               <div id='preShow' className='card-body'>
                 <div id='SHOW' className='card remoColor'>
-                  <Table
-                    responsive='sm'
-                    striped
-                    bordered
-                    hover
-                    variant='dark'
-                    size='sm'
-                  >
-                    <thead>
-                      <tr>
-                        <th className='text-center'>Semana</th>
-                        <th className='text-center'>Horas</th>
-                        <th className='text-center'>Calidad</th>
-                        <th className='text-center'>Speed</th>
-                        <th className='text-center'>Bonus</th>
-                        <th className='text-center'>Extra</th>
-                        <th className='text-center'>Total</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {this.state.history.map((payout) => (
-                        <tr key={payout._id}>
-                          <td className='text-center'>
-                            {payout.payout.replace(/Horas/g, "")}
-                          </td>
-                          <td className='text-center'>{payout.hours}</td>
-                          <td className='text-center'>{payout.quality}</td>
-                          <td className='text-center'>{payout.speed}</td>
-                          <td className='text-center'>${payout.bonus}</td>
-                          <td className='text-center'>${payout.extra}</td>
-                          <td className='text-center'>${payout.total}</td>
-                        </tr>
+                  <div className='container'>
+                    <div className='row'>
+                      {history.map((data) => (
+                        <div key={data._id} className='col-md-4 mt-2 mb-2'>
+                          <Card className='remoColor2'>
+                            <Card.Header className='text-'>
+                              <h1 className='h4'>{data.payout}</h1>
+                            </Card.Header>
+                            <Card.Body>
+                              <div
+                                className='d-flex justify-content-between align-items-center'
+                                style={{ fontSize: "1.2em" }}
+                              >
+                                <div>Horas</div>
+                                <div>
+                                  <i className='far fa-clock'></i> {data.hours}
+                                </div>
+                              </div>
+                              <hr />
+                              <div
+                                className='d-flex justify-content-between align-items-center'
+                                style={{ fontSize: "1.2em" }}
+                              >
+                                {data.quality >= 5 ? (
+                                  <div>
+                                    C{" "}
+                                    <i className='fas fa-thumbs-up text-success'></i>{" "}
+                                    {data.quality}
+                                  </div>
+                                ) : (
+                                  <div>
+                                    C{" "}
+                                    <i className='fas fa-thumbs-down text-danger'></i>{" "}
+                                    {data.quality}
+                                  </div>
+                                )}
+                                {data.speed >= 5 ? (
+                                  <div>
+                                    V{" "}
+                                    <i className='fas fa-fast-forward text-success'></i>{" "}
+                                    {data.speed}
+                                  </div>
+                                ) : (
+                                  <div>
+                                    V{" "}
+                                    <i className='fas fa-fast-backward text-danger'></i>{" "}
+                                    {data.speed}
+                                  </div>
+                                )}
+                              </div>
+                              <hr />
+                              <div
+                                className='d-flex justify-content-between align-items-center'
+                                style={{ fontSize: "1.05em" }}
+                              >
+                                {data.extra > 0 ? (
+                                  <div>
+                                    Extra <i className='fas fa-dollar-sign'></i>
+                                    {data.extra}
+                                  </div>
+                                ) : null}
+
+                                {data.bonus > 0 ? (
+                                  <div>
+                                    Bono <i className='fas fa-dollar-sign'></i>
+                                    {data.bonus}
+                                  </div>
+                                ) : null}
+                              </div>
+                              {data.bonus || data.extra > 0 ? <hr /> : null}
+                              <div
+                                className='text-center mt-2'
+                                style={{ fontSize: "1.5em" }}
+                              >
+                                Total <i className='fas fa-dollar-sign'></i>
+                                {data.total}
+                              </div>
+                            </Card.Body>
+                          </Card>
+                        </div>
                       ))}
-                    </tbody>
-                  </Table>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

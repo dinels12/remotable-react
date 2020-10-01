@@ -1,9 +1,9 @@
 import axios from "axios";
 import React, { Component } from "react";
-import { Spinner, Card } from "react-bootstrap";
+import { Spinner, Card, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import Anuncio from "./Anuncio";
-import NavbarBottom from "./NavbarBottom";
-import NavBarTop from "./NavBarTop";
+// import UserData from "./UserData";
 import "../App.css";
 import { VictoryPie, VictoryLabel } from "victory";
 import Expired from "./Expired";
@@ -202,6 +202,8 @@ export default class User extends Component {
       annoucements,
       expired,
       notFound,
+      // gestion,
+      // data,
       lastWeek,
     } = this.state;
 
@@ -233,7 +235,7 @@ export default class User extends Component {
       );
     }
     return (
-      <div className='mst'>
+      <div id={this.state._id} className='container'>
         {anuncios ? (
           <Anuncio
             show={anuncios}
@@ -241,129 +243,167 @@ export default class User extends Component {
             onHide={() => this.onHide(false)}
           />
         ) : null}
-        <NavBarTop
-          logout={() => this.logout()}
-          statusCheck={this.statusCheck}
-          status={this.state.status}
-        />
-        <div className='card newCard'>
-          <div id='preShow' className='card-body'>
-            <div id='SHOW' className='card remoColor'>
-              <div className='card-header'>
-                <div className='d-flex justify-content-between align-items-center'>
-                  <div className='m-auto'>
-                    <div className='container'>
-                      <div id='actualPayout' className='text-center fontS'>
-                        {this.state.payout}
+        {/* {gestion ? (
+          <UserData
+            show={gestion}
+            data={data}
+            onHide={() => this.gestionHide()}
+          />
+        ) : null} */}
+        <div className='row'>
+          <div id='hoursTable' className='col m-auto'>
+            <div className='card remoColor'>
+              <div className='card-header d-flex justify-content-between align-content-center'>
+                {/* <Button
+                  onClick={() => {
+                    this.setState({ gestion: true });
+                  }}
+                >
+                  Gestionar mi suscripción
+                </Button> */}
+
+                <Link to='/history' className='btn btn-secondary'>
+                  Historial de pagos
+                </Link>
+                <button className='btn btn-danger' onClick={this.logout}>
+                  Salir
+                </button>
+                <Button ref={this.statusCheck} className='text-white'>
+                  {this.state.status}
+                </Button>
+              </div>
+              <div id='preShow' className='card-body'>
+                <div id='SHOW' className='card remoColor'>
+                  <div className='card-header'>
+                    <div className='d-flex justify-content-between align-items-center'>
+                      <div className='m-auto'>
+                        <div className='container'>
+                          <div id='actualPayout' className='text-center fontS'>
+                            {this.state.payout}
+                          </div>
+                          <div className='text-center fontP'>PAGO</div>
+                        </div>
                       </div>
-                      <div className='text-center fontP'>PAGO</div>
+                      <div className='m-auto respM380'>
+                        <div className='container'>
+                          <div className='fontS'>
+                            <svg width={200} height={200}>
+                              <VictoryPie
+                                standalone={false}
+                                animate={{ duration: 1000 }}
+                                width={200}
+                                height={200}
+                                data={[
+                                  { key: "", y: this.state.metric },
+                                  { key: "", y: 100 - this.state.metric },
+                                ]}
+                                innerRadius={70}
+                                labels={() => null}
+                                colorScale={["#19B3A6", "#EEEEEE"]}
+                              />
+                              <VictoryLabel
+                                textAnchor='middle'
+                                verticalAnchor='middle'
+                                x={100}
+                                y={100}
+                                text={this.state.Hours}
+                                style={{ fontSize: 35 }}
+                              />
+                            </svg>
+                          </div>
+                          <div className='text-center fontP'>HORAS</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div className='m-auto respM380'>
-                    <div className='container'>
-                      <div className='fontS'>
-                        <svg width={200} height={200}>
-                          <VictoryPie
-                            standalone={false}
-                            animate={{ duration: 1000 }}
-                            width={200}
-                            height={200}
-                            data={[
-                              { key: "", y: this.state.metric },
-                              { key: "", y: 100 - this.state.metric },
-                            ]}
-                            innerRadius={70}
-                            labels={() => null}
-                            colorScale={["#19B3A6", "#EEEEEE"]}
-                          />
-                          <VictoryLabel
-                            textAnchor='middle'
-                            verticalAnchor='middle'
-                            x={100}
-                            y={100}
-                            text={this.state.Hours}
-                            style={{ fontSize: 35 }}
-                          />
-                        </svg>
-                      </div>
-                      <div className='text-center fontP'>HORAS</div>
+                  <div className='card-body'>
+                    <div className='col-md-4'>
+                      <Card style={{ color: "black" }}>
+                        <Card.Header className='d-flex justify-content-between align-items-center'>
+                          <div className='h4'>{lastWeek.payout}</div>
+                        </Card.Header>
+                        <Card.Body>
+                          <div
+                            className='d-flex justify-content-between align-items-center'
+                            style={{ fontSize: "1.2em" }}
+                          >
+                            <div>Horas</div>
+                            <div>
+                              <i className='far fa-clock'></i> {lastWeek.hours}
+                            </div>
+                          </div>
+                          <hr />
+                          <div
+                            className='d-flex justify-content-between align-items-center'
+                            style={{ fontSize: "1.2em" }}
+                          >
+                            {lastWeek.quality >= 5 ? (
+                              <div className='text-success'>
+                                C <i className='fas fa-thumbs-up'></i>{" "}
+                                {lastWeek.quality}
+                              </div>
+                            ) : (
+                              <div className='text-danger'>
+                                C <i className='fas fa-thumbs-down'></i>{" "}
+                                {lastWeek.quality}
+                              </div>
+                            )}
+                            {lastWeek.speed >= 5 ? (
+                              <div className='text-success'>
+                                V <i className='fas fa-fast-forward'></i>{" "}
+                                {lastWeek.speed}
+                              </div>
+                            ) : (
+                              <div className='text-danger'>
+                                V <i className='fas fa-fast-backward'></i>{" "}
+                                {lastWeek.speed}
+                              </div>
+                            )}
+                          </div>
+                          <hr />
+                          <div
+                            className='d-flex justify-content-between align-items-center'
+                            style={{ fontSize: "1.05em" }}
+                          >
+                            {lastWeek.extra > 0 ? (
+                              <div>
+                                Extra <i className='fas fa-dollar-sign'></i>
+                                {lastWeek.extra}
+                              </div>
+                            ) : null}
+
+                            {lastWeek.bonus > 0 ? (
+                              <div>
+                                Bono <i className='fas fa-dollar-sign'></i>
+                                {lastWeek.bonus}
+                              </div>
+                            ) : null}
+                          </div>
+                          {lastWeek.bonus || lastWeek.extra > 0 ? <hr /> : null}
+                          <div
+                            className='text-center mt-2'
+                            style={{ fontSize: "1.5em" }}
+                          >
+                            Total <i className='fas fa-dollar-sign'></i>
+                            {lastWeek.total}
+                          </div>
+                        </Card.Body>
+                      </Card>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className='card-body'>
-                <div className='col-md-12'>
-                  <Card className='remoColor2'>
-                    <Card.Header className='d-flex justify-content-between align-items-center'>
-                      <div className='h4'>{lastWeek.payout}</div>
-                    </Card.Header>
-                    <Card.Body>
-                      <div
-                        style={{ fontSize: "1.2em" }}
-                        className='d-flex justify-content-between align-items-center'
-                      >
-                        <div>
-                          Horas <i className='far fa-clock'></i>{" "}
-                          {lastWeek.hours}
-                        </div>
-                        {lastWeek.quality >= 5 ? (
-                          <div>
-                            Calidad{" "}
-                            <i className='fas fa-thumbs-up text-success'></i>{" "}
-                            {lastWeek.quality}
-                          </div>
-                        ) : (
-                          <div>
-                            Calidad{" "}
-                            <i className='fas fa-thumbs-down text-danger'></i>{" "}
-                            {lastWeek.quality}
-                          </div>
-                        )}
-                        {lastWeek.speed >= 5 ? (
-                          <div>
-                            Velocidad{" "}
-                            <i className='fas fa-fast-forward text-success'></i>{" "}
-                            {lastWeek.speed}
-                          </div>
-                        ) : (
-                          <div>
-                            Velocidad{" "}
-                            <i className='fas fa-fast-backward text-danger'></i>{" "}
-                            {lastWeek.speed}
-                          </div>
-                        )}
-                      </div>
-                      <hr />
-                      <div
-                        className='d-flex justify-content-between align-items-center'
-                        style={{ fontSize: "1.2em" }}
-                      >
-                        {lastWeek.extra > 0 ? (
-                          <div>
-                            Extra <i className='fas fa-dollar-sign'></i>
-                            {lastWeek.extra}
-                          </div>
-                        ) : null}
-
-                        {lastWeek.bonus > 0 ? (
-                          <div>
-                            Bono <i className='fas fa-dollar-sign'></i>
-                            {lastWeek.bonus}
-                          </div>
-                        ) : null}
-                        <div>
-                          Total <i className='fas fa-dollar-sign'></i>
-                          {lastWeek.total}
-                        </div>
-                      </div>
-                    </Card.Body>
-                  </Card>
+              <div className='card-footer'>
+                <div className='d-flex justify-content-between align-items-center'>
+                  <h5>Ultima actualizacion:</h5>
+                  <h5 className='timeago' id='update'>
+                    {this.state.update}
+                  </h5>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <NavbarBottom update={this.state.update} />
       </div>
     );
   }

@@ -6,21 +6,22 @@ body {
 #root {
   height: 100%;
 }
-
 body {
-  background: #eeeee5 !important;
-  /* background: #28a745 !important; */
+  /* background: #eeeee5 !important; */
+  background: #29cd9c !important;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
-
 #preShow {
   padding: 0 !important;
 }
-
 ::-webkit-scrollbar {
   display: none;
 }
 
+.newCard {
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
 #hoursTable {
   padding: 0 !important;
   margin: 0 !important;
@@ -32,30 +33,27 @@ body {
 .card .card-body {
   height: 100%;
 }
-
 .container,
 .row {
   min-width: 100% !important;
   height: 100% !important;
 }
-
 .font {
   font-size: 1.5rem;
 }
-
 .fontw {
   font-size: 1.2rem;
 }
-
 .fontS {
   font-weight: 500 !important;
   font-size: 3rem !important;
 }
-
 #formConsult {
   margin-top: 15% !important;
 }
-
+.mst {
+  height: 100%;
+}
 .fontP {
   font-weight: 300;
   font-size: 1.8rem;
@@ -66,21 +64,36 @@ body {
 .hello {
   overflow: hidden !important;
 }
-
 #status {
   margin-top: 50%;
 }
-
 #error {
   margin-top: 20%;
 }
-
 .remoColor {
   color: white;
   background: #29cd9c !important;
 }
+.remoColor2 {
+  color: white;
+  background: rgba(0, 0, 0, 0.1) !important;
+}
+.navBarColor {
+  color: white;
+  background: rgba(0, 0, 0, 0) !important;
+}
 
 @media (max-width: 600px) {
+  .newCard {
+    margin-top: 12%;
+    margin-bottom: 0%;
+  }
+
+  .remoColor2 {
+    color: white;
+    background: rgba(0, 0, 0, 0.1) !important;
+  }
+
   #root {
     height: 100%;
   }
@@ -134,16 +147,39 @@ body {
 }
 
 @media (max-width: 380px) {
+  .newCard {
+    margin-top: 12%;
+    margin-bottom: 0%;
+  }
   .fontS {
     font-weight: 500 !important;
     font-size: 40px !important;
   }
+
   svg {
     width: 100%;
   }
 }
 
 @media (max-width: 360px) {
+  .newCard {
+    margin-top: 15%;
+    margin-bottom: 0%;
+  }
+  .fontS {
+    font-weight: 500 !important;
+    font-size: 34px !important;
+  }
+  svg {
+    width: 100%;
+  }
+}
+
+@media (max-width: 320px) {
+  .newCard {
+    margin-top: 15%;
+    margin-bottom: 22%;
+  }
   .fontS {
     font-weight: 500 !important;
     font-size: 34px !important;
