@@ -4,6 +4,7 @@ import { Spinner, Card } from "react-bootstrap";
 import Anuncio from "./Anuncio";
 import NavbarBottom from "./NavbarBottom";
 import NavBarTop from "./NavBarTop";
+import BtnMod from "./BtnMod";
 import "../App.css";
 import { VictoryPie, VictoryLabel } from "victory";
 import Expired from "./Expired";
@@ -94,6 +95,9 @@ export default class User extends Component {
           this.setState({
             _id: user._id,
             Hours: this.dot(user.Hours),
+            invalid: user.invalid,
+            skip: user.skip,
+            sqb: user.sqb,
             update: user.update,
             payout: "$" + this.dot(user.Hours * 0.5),
             loading: false,
@@ -246,6 +250,7 @@ export default class User extends Component {
           statusCheck={this.statusCheck}
           status={this.state.status}
         />
+
         <div className='card newCard'>
           <div id='preShow' className='card-body'>
             <div id='SHOW' className='card remoColor'>
@@ -286,7 +291,13 @@ export default class User extends Component {
                           />
                         </svg>
                       </div>
-                      <div className='text-center fontP'>HORAS</div>
+                      <div className='text-center'>
+                        <BtnMod
+                          invalid={this.state.invalid}
+                          skip={this.state.skip}
+                          sqb={this.state.sqb}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
