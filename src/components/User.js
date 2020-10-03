@@ -98,7 +98,7 @@ export default class User extends Component {
             invalid: user.invalid,
             skip: user.skip,
             sqb: user.sqb,
-            update: user.update,
+            update: user.update_at,
             payout: "$" + this.dot(user.Hours * 0.5),
             loading: false,
             metric: this.por(user.Hours),
