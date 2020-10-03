@@ -1,13 +1,6 @@
 import React, { Component } from "react";
 import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import axios from "axios";
-const { development, production, token } = require("../environment");
-let web = development;
-if (process.env.NODE_ENV === "production") {
-  web = production;
-}
-// 5e737df650fb650032e31bae
 
 export default class UserHistory extends Component {
   state = {
@@ -15,17 +8,9 @@ export default class UserHistory extends Component {
   };
 
   async componentDidMount() {
-    const id = localStorage.getItem("_id");
-    const res = await axios
-      .get(`${web}/api/user/payouts/${id}`, {
-        headers: { token: token },
-      })
-      .catch((err) => {
-        if (err) return console.log("Error");
-      });
-    if (res) {
-      this.setState({ history: res.data });
-    }
+    const { history } = this.props;
+
+    this.setState({ history: history });
   }
 
   render() {
@@ -87,13 +72,13 @@ export default class UserHistory extends Component {
                                 {data.speed >= 5 ? (
                                   <div>
                                     V{" "}
-                                    <i className='fas fa-fast-forward text-success'></i>{" "}
+                                    <i className='fas fa-thumbs-up text-success'></i>{" "}
                                     {data.speed}
                                   </div>
                                 ) : (
                                   <div>
                                     V{" "}
-                                    <i className='fas fa-fast-backward text-danger'></i>{" "}
+                                    <i className='fas fa-thumbs-down text-danger'></i>{" "}
                                     {data.speed}
                                   </div>
                                 )}

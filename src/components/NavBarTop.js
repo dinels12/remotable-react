@@ -5,18 +5,23 @@ import { Link } from "react-router-dom";
 export default class NavBarTop extends Component {
   render() {
     const { statusCheck, status, logout } = this.props;
+
     return (
       <Navbar className='navBarColor d-block' expand='lg' fixed='top'>
         <div className='d-flex justify-content-between align-items-center'>
-          <Link to='/history' className='btn btn-secondary'>
-            Historial de pagos
-          </Link>
+          {status === "Online" ? (
+            <Link to='/history' className='btn btn-secondary'>
+              Historial de pagos
+            </Link>
+          ) : null}
           <button className='btn btn-danger' onClick={logout}>
             Salir
           </button>
-          <Button ref={statusCheck} className='text-white'>
-            {status}
-          </Button>
+          {status ? (
+            <Button ref={statusCheck} variant='danger' className='text-white'>
+              {status}
+            </Button>
+          ) : null}
         </div>
       </Navbar>
     );

@@ -3,7 +3,7 @@ import { Button, Modal } from "react-bootstrap";
 
 export default class BtnMod extends Component {
   state = {
-    show: true,
+    show: false,
     hours: 0,
     invalid: 0,
     skip: 0,
@@ -11,9 +11,17 @@ export default class BtnMod extends Component {
   };
 
   componentDidMount() {
-    const { invalid, skip, sqb } = this.props;
-    this.setState({ show: false, invalid: invalid, skip: skip, sqb: sqb });
+    this.update = setInterval(() => {
+      this.getHours();
+    }, 100);
   }
+  componentWillUnmount() {
+    clearInterval(this.update);
+  }
+  getHours = () => {
+    const { invalid, skip, sqb } = this.props;
+    this.setState({ invalid: invalid, skip: skip, sqb: sqb });
+  };
 
   onHide() {
     this.setState({ show: false });
@@ -36,7 +44,7 @@ export default class BtnMod extends Component {
         >
           <Modal.Header closeButton>
             <Modal.Title id='contained-modal-title-vcenter'>
-              <div>Otras Horas</div>
+              Otras Horas
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -48,7 +56,7 @@ export default class BtnMod extends Component {
                 <p>Horas de SKIP {skip}</p>
               </div>
               <div className='col'>
-                <p>Horas de SQB {sqb}</p>
+                <p>Horas de SBQ {sqb}</p>
               </div>
             </div>
           </Modal.Body>
@@ -58,16 +66,15 @@ export default class BtnMod extends Component {
           </Modal.Footer>
         </Modal>
       );
-    } else {
-      return (
-        <Button
-          className='text-center fontP'
-          variant='info'
-          onClick={this.showModal}
-        >
-          HORAS
-        </Button>
-      );
     }
+    return (
+      <Button
+        className='text-center fontP'
+        variant='info'
+        onClick={this.showModal}
+      >
+        HORAS
+      </Button>
+    );
   }
 }

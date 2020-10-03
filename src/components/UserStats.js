@@ -1,13 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import Stats from "./Charts";
 import { Button } from "react-bootstrap";
-const { development, production, token } = require("../environment");
-let web = development;
-if (process.env.NODE_ENV === "production") {
-  web = production;
-}
 
 export default class UserStats extends Component {
   state = {
@@ -18,28 +12,23 @@ export default class UserStats extends Component {
     total: [],
     show: false,
     selected: [],
+    loading: true,
   };
 
-  async componentDidMount() {
-    const id = localStorage.getItem("_id");
-    const res = await axios
-      .get(`${web}/api/user/payouts/${id}`, {
-        headers: { token: token },
-      })
-      .catch((err) => {
-        if (err) return console.log("Error");
-      });
-    if (res) {
-      this.setState({ history: res.data });
-    }
-    setTimeout(() => {
+  componentDidMount() {
+    this.setState({ history: this.props.history });
+    this.update = setInterval(() => {
       this.setState({
         quality: this.getQuality(),
         speed: this.getSpeed(),
         hours: this.getHours(),
         total: this.getTotal(),
       });
-    }, 1000);
+    }, 100);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.update);
   }
 
   getQuality() {
