@@ -22,7 +22,7 @@ export default class User extends Component {
     Hours: 0,
     update: "",
     lastWeek: {},
-    payout: "$0",
+    payout: "$0.00",
     total: "",
     loading: true,
     metric: 0,
@@ -53,7 +53,7 @@ export default class User extends Component {
   }
 
   getUser = () => {
-    const { res, error, status } = this.props;
+    const { res, error, status, anuncios } = this.props;
     if (error) {
       const message = error;
       if (message === "Membresia Expirada") {
@@ -102,7 +102,7 @@ export default class User extends Component {
       payout: "$" + this.dot(user.Hours * 0.5),
       loading: false,
       metric: this.por(user.Hours),
-      anuncios: user.anuncios,
+      anuncios: anuncios,
       annoucements: {
         title: user.annoucements[0].title,
         body: user.annoucements[0].body,
@@ -151,12 +151,12 @@ export default class User extends Component {
     this.statusCheck.current.classList.add("btn-success");
   }
 
-  onHide = async (valor) => {
-    this.setState({ anuncios: valor });
-
+  onHide = async () => {
     const id = this.state._id;
 
     await axios.put(`${web}/api/annoucements/${id}`);
+    this.props.updateUser();
+    this.setState({ anuncios: false });
   };
 
   logout = () => {
@@ -204,7 +204,7 @@ export default class User extends Component {
           <Anuncio
             show={anuncios}
             list={annoucements}
-            onHide={() => this.onHide(false)}
+            onHide={() => this.onHide()}
           />
         ) : null}
         {expired ? (

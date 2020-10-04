@@ -84,11 +84,20 @@ export default class App extends Component {
       if (res) {
         document.body.classList.remove("bg-success");
         document.body.classList.add("bgColor");
-        this.setState({ loading: false, data: res.data, status: "on" });
+        this.setState({
+          loading: false,
+          data: res.data,
+          status: "on",
+          anuncios: res.data.user.anuncios,
+        });
       }
     } else {
       this.setState({ loading: false });
     }
+  };
+
+  update = () => {
+    this.setState({ anuncios: false });
   };
 
   userHistory = async () => {
@@ -156,6 +165,10 @@ export default class App extends Component {
           <Switch>
             <Route exact path='/'>
               <UserInfo
+                updateUser={() => {
+                  this.update();
+                }}
+                anuncios={this.state.anuncios}
                 res={this.state.data}
                 loading={this.state.loading}
                 error={this.state.error}

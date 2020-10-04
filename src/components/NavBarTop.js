@@ -13,7 +13,13 @@ export default class NavBarTop extends Component {
             <Link to='/history' className='btn btn-secondary'>
               Historial de pagos
             </Link>
-          ) : null}
+          ) : status === "Offline" ? (
+            <Button variant='danger'>Error de red</Button>
+          ) : (
+            <Button variant='info' className='text-white'>
+              Cargando
+            </Button>
+          )}
           <button className='btn btn-danger' onClick={logout}>
             Salir
           </button>
@@ -21,7 +27,11 @@ export default class NavBarTop extends Component {
             <Button ref={statusCheck} variant='danger' className='text-white'>
               {status}
             </Button>
-          ) : null}
+          ) : (
+            <Button variant='info' className='text-white'>
+              Cargando
+            </Button>
+          )}
         </div>
       </Navbar>
     );
