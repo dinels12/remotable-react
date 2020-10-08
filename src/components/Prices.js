@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Row, Col, Button } from "react-bootstrap";
 import Buy from "./Buy";
 import BuySuccesful from "./BuySuccesful";
+import { register } from "../environment";
 
 export default class Prices extends Component {
   state = {
@@ -72,9 +73,13 @@ export default class Prices extends Component {
                 </div>
 
                 <hr />
-                <Button block onClick={() => this.onClick("plan1Show")}>
-                  Comprar
-                </Button>
+                {register === "open" ? (
+                  <Button block onClick={() => this.onClick("plan1Show")}>
+                    Comprar
+                  </Button>
+                ) : (
+                  <Button>Registros Cerrados</Button>
+                )}
               </div>
             </div>
           </Col>
@@ -99,9 +104,13 @@ export default class Prices extends Component {
                 </div>
 
                 <hr />
-                <Button block onClick={() => this.onClick("plan2Show")}>
-                  Comprar
-                </Button>
+                {register === "open" ? (
+                  <Button block onClick={() => this.onClick("plan2Show")}>
+                    Comprar
+                  </Button>
+                ) : (
+                  <Button>Registros Cerrados</Button>
+                )}
               </div>
             </div>
           </Col>
@@ -126,9 +135,13 @@ export default class Prices extends Component {
                 </div>
 
                 <hr />
-                <Button block onClick={() => this.onClick("plan3Show")}>
-                  Comprar
-                </Button>
+                {register === "open" ? (
+                  <Button block onClick={() => this.onClick("plan3Show")}>
+                    Comprar
+                  </Button>
+                ) : (
+                  <Button>Registros Cerrados</Button>
+                )}
               </div>
             </div>
           </Col>

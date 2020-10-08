@@ -78,14 +78,14 @@ body {
   background: #29cd9c !important;
 }
 
-.remoColor2 {
-  color: white;
-  background: #29cd9cc7 !important;
-}
-
 .navBarColor {
   color: white;
   background: #135c4662 !important;
+}
+
+.remoColor2 {
+  color: white;
+  background: rgba(0, 0, 0, 0.1) !important;
 }
 
 @media (max-width: 600px) {
@@ -93,12 +93,6 @@ body {
     margin-top: 12%;
     margin-bottom: 0%;
   }
-
-  .remoColor2 {
-    color: white;
-    background: rgba(0, 0, 0, 0.1) !important;
-  }
-
   #root {
     height: 100%;
   }

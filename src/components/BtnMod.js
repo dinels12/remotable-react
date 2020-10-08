@@ -32,6 +32,7 @@ export default class BtnMod extends Component {
   };
 
   render() {
+    const status = localStorage.getItem("status");
     const { show, invalid, skip, sqb } = this.state;
     if (show) {
       return (
@@ -67,12 +68,17 @@ export default class BtnMod extends Component {
         </Modal>
       );
     }
+
+    if (status === "on") {
+      return (
+        <Button className='text-center' variant='info' onClick={this.showModal}>
+          HORAS
+        </Button>
+      );
+    }
+
     return (
-      <Button
-        className='text-center fontP'
-        variant='info'
-        onClick={this.showModal}
-      >
+      <Button className='text-center' variant='info'>
         HORAS
       </Button>
     );

@@ -58,8 +58,20 @@ export default class Buy extends Component {
           const message = err.response.data.message;
           if (err) {
             if (message === "Membresia Vigente") {
-              localStorage.setItem("_id", id);
-              window.location.reload();
+              localStorage.removeItem("hours");
+              localStorage.removeItem("update");
+              localStorage.removeItem("payout");
+              localStorage.removeItem("metric");
+              localStorage.removeItem("_id");
+              window.location.href = "/";
+            }
+            if (message === "Esperando confirmacion del pago") {
+              localStorage.removeItem("hours");
+              localStorage.removeItem("update");
+              localStorage.removeItem("payout");
+              localStorage.removeItem("metric");
+              localStorage.removeItem("_id");
+              return (window.location.href = "/");
             }
           }
         });

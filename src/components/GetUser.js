@@ -2,8 +2,9 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Expired from "./Expired";
-import NotFound from "./NotFound";
-const { development, production, token } = require("../environment");
+import NotFoundOpen from "./NotFoundOpen";
+import NotFoundClose from "./NotFoundClose";
+import { development, production, token, register } from "../environment";
 let web = development;
 if (process.env.NODE_ENV === "production") {
   web = production;
@@ -29,6 +30,7 @@ export default class GetUser extends Component {
   };
 
   componentDidMount() {
+    this.cleanCache();
     let id = localStorage.getItem("_id");
     if (id) {
       this.setState({ _id: id, redirect: true });
@@ -38,6 +40,16 @@ export default class GetUser extends Component {
   messageError() {
     this.message.current.classList.remove("btn-primary");
     this.message.current.classList.add("btn-danger");
+  }
+
+  cleanCache() {
+    localStorage.removeItem("_id");
+    localStorage.removeItem("hours");
+    localStorage.removeItem("payout");
+    localStorage.removeItem("loading");
+    localStorage.removeItem("update");
+    localStorage.removeItem("metric");
+    localStorage.removeItem("cache");
   }
 
   messageLoading() {
@@ -85,15 +97,20 @@ export default class GetUser extends Component {
           }
         });
       if (res) {
-        const user = res.data.user;
-        if (user._id) {
+        if (res.data.user) {
+          const user = res.data.user;
           this.messageSuccess();
-          this.setState({ message: "Usuario Conseguido" });
+          this.setState({ message: "Usuario existente" });
           localStorage.setItem("_id", user._id);
           window.location.reload();
         } else if (localStorage.getItem("_id") === "undefined") {
           localStorage.removeItem("_id");
           window.location.reload();
+        } else {
+          this.setState({
+            message: "ID Invalido por favor contactar a soporte.",
+          });
+          return this.messageError();
         }
       }
     } else {
@@ -105,13 +122,13 @@ export default class GetUser extends Component {
   notFoundHide() {
     this.setState({ notFound: false });
     localStorage.removeItem("_id");
-    window.location.reload();
+    window.location.href = "/plans";
   }
 
   expiredHide() {
     this.setState({ expired: false });
     localStorage.removeItem("_id");
-    window.location.reload();
+    window.location.href = "/plans";
   }
 
   render() {
@@ -129,7 +146,17 @@ export default class GetUser extends Component {
             />
           ) : null}
           {notFound ? (
-            <NotFound show={notFound} onHide={() => this.notFoundHide()} />
+            register === "open" ? (
+              <NotFoundOpen
+                show={notFound}
+                onHide={() => this.notFoundHide()}
+              />
+            ) : (
+              <NotFoundClose
+                show={notFound}
+                onHide={() => this.notFoundHide()}
+              />
+            )
           ) : null}
           <div className='card remoColor'>
             <div className='card-header'>

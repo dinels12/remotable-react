@@ -30,19 +30,6 @@ export default class notFound extends Component {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h4>
-            <strong>
-              <mark>
-                <em>
-                  <div>Solo por Septiembre!</div>
-                  <div>
-                    Paga $3 y te regalamos 1 mes de membresia, serian 4 meses de
-                    membresia por el precio de $3!
-                  </div>
-                </em>
-              </mark>
-            </strong>
-          </h4>
           <p>
             Para poder usar esta aplicacion tienes que tener una membresia por
             cada ID.

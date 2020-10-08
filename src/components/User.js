@@ -8,13 +8,14 @@ import BtnMod from "./BtnMod";
 import "../App.css";
 import { VictoryPie, VictoryLabel } from "victory";
 import Expired from "./Expired";
-import NotFound from "./NotFound";
+import NotFoundOpen from "./NotFoundOpen";
+import NotFoundClose from "./NotFoundClose";
 
-const { development, production } = require("../environment");
+import { development, production, register } from "../environment";
 let web = development;
 if (process.env.NODE_ENV === "production") {
-  web = production;
 }
+web = production;
 
 export default class User extends Component {
   state = {
@@ -40,6 +41,18 @@ export default class User extends Component {
   }
 
   componentDidMount() {
+    const hours = localStorage.getItem("hours")
+      ? localStorage.getItem("hours")
+      : "0.00";
+    const metric = localStorage.getItem("metric")
+      ? localStorage.getItem("metric")
+      : 0;
+    const amount = localStorage.getItem("payout")
+      ? localStorage.getItem("payout")
+      : "$0.00";
+
+    this.setState({ Hours: hours, metric: metric, payout: amount });
+
     this.updateT = setTimeout(() => {
       this.updateI = setInterval(() => {
         this.getUser();
@@ -79,6 +92,7 @@ export default class User extends Component {
       } else if (message === "Error de red") {
       }
     }
+
     if (status) {
       if (status === "on") {
         this.statusOn();
@@ -128,6 +142,8 @@ export default class User extends Component {
       });
     }
     localStorage.setItem("hours", user.Hours);
+    localStorage.setItem("payout", "$" + this.dot(user.Hours * 0.5));
+    localStorage.setItem("metric", this.por(user.Hours));
     localStorage.setItem("update", user.update_at);
   };
 
@@ -168,6 +184,7 @@ export default class User extends Component {
       localStorage.removeItem("loading");
       localStorage.removeItem("update");
       localStorage.removeItem("metric");
+      localStorage.removeItem("cache");
       window.location.reload();
     }
   };
@@ -175,13 +192,13 @@ export default class User extends Component {
   notFoundHide() {
     this.setState({ notFound: false });
     localStorage.removeItem("_id");
-    window.location.reload();
+    window.location.href = "/plans";
   }
 
   expiredHide() {
     this.setState({ expired: false });
     localStorage.removeItem("_id");
-    window.location.reload();
+    window.location.href = "/plans";
   }
 
   gestionHide() {
@@ -211,7 +228,11 @@ export default class User extends Component {
           <Expired show={expired} onHide={() => this.expiredHide()} />
         ) : null}
         {notFound ? (
-          <NotFound show={notFound} onHide={() => this.notFoundHide()} />
+          register === "open" ? (
+            <NotFoundOpen show={notFound} onHide={() => this.notFoundHide()} />
+          ) : (
+            <NotFoundClose show={notFound} onHide={() => this.notFoundHide()} />
+          )
         ) : null}
 
         <NavBarTop
@@ -273,7 +294,7 @@ export default class User extends Component {
               </div>
               <div className='card-body'>
                 <div className='col-md-12'>
-                  {status === "Online" ? (
+                  {status === "Online" && lastWeek.total > 0 ? (
                     <Card className='remoColor2'>
                       <Card.Header className='d-flex justify-content-between align-items-center'>
                         <div className='h4'>{lastWeek.payout}</div>

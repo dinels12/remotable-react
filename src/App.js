@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import UserInfo from "./components/User";
 import Calculator from "./components/ Calculator";
-// import Prices from "./components/Prices";
+import Prices from "./components/Prices";
 import "bootstrap/dist/css/bootstrap.min.css";
 import GetUser from "./components/GetUser";
 import UserHistory from "./components/UserHistory";
@@ -47,6 +47,84 @@ export default class App extends Component {
         })
         .catch((err) => {
           if (err) {
+            const message = err.response.data.message;
+            if (message === "Usuario no encontrado.") {
+              document.body.classList.remove("bg-success");
+              document.body.classList.add("bgColor");
+              this.setState({
+                data: {
+                  user: {
+                    _id: localStorage.getItem("_id"),
+                    Hours: localStorage.getItem("hours"),
+                    update_at: localStorage.getItem("update"),
+                    payout: localStorage.getItem("payout"),
+                    metric: localStorage.getItem("metric"),
+                    annoucements: [
+                      {
+                        title: "",
+                        body: "",
+                        author: "Admin",
+                        extra: "",
+                        number: 0,
+                      },
+                    ],
+                    anuncios: false,
+                    invalid: 0,
+                    lastWeek: [],
+                    skip: 0,
+                    sqb: 0,
+                  },
+                },
+                status: "off",
+                loading: false,
+              });
+              localStorage.setItem("status", "off");
+
+              return this.setState({ error: message });
+            }
+            if (message === "Membresia Expirada") {
+              document.body.classList.remove("bg-success");
+              document.body.classList.add("bgColor");
+              this.setState({
+                data: {
+                  user: {
+                    _id: localStorage.getItem("_id"),
+                    Hours: localStorage.getItem("hours"),
+                    update_at: localStorage.getItem("update"),
+                    payout: localStorage.getItem("payout"),
+                    metric: localStorage.getItem("metric"),
+                    annoucements: [
+                      {
+                        title: "",
+                        body: "",
+                        author: "Admin",
+                        extra: "",
+                        number: 0,
+                      },
+                    ],
+                    anuncios: false,
+                    invalid: 0,
+                    lastWeek: [],
+                    skip: 0,
+                    sqb: 0,
+                  },
+                },
+                status: "off",
+                loading: false,
+              });
+              localStorage.setItem("status", "off");
+              return this.setState({ error: message });
+            }
+            if (message === "Esperando confirmacion del pago") {
+              this.setState({ loading: false });
+              localStorage.removeItem("hours");
+              localStorage.removeItem("update");
+              localStorage.removeItem("payout");
+              localStorage.removeItem("metric");
+              localStorage.removeItem("_id");
+              return (window.location.href = "/");
+            }
+
             document.body.classList.remove("bg-success");
             document.body.classList.add("bgColor");
             this.setState({
@@ -76,10 +154,9 @@ export default class App extends Component {
               status: "off",
               loading: false,
             });
+            localStorage.setItem("status", "off");
             return this.setState({ error: "Error de red" });
           }
-          const message = err.response.data.message;
-          this.setState({ error: message });
         });
       if (res) {
         document.body.classList.remove("bg-success");
@@ -90,6 +167,7 @@ export default class App extends Component {
           status: "on",
           anuncios: res.data.user.anuncios,
         });
+        localStorage.setItem("status", "on");
       }
     } else {
       this.setState({ loading: false });
@@ -119,6 +197,7 @@ export default class App extends Component {
   render() {
     let sesion = localStorage.getItem("_id");
     const { loading } = this.state;
+
     if (loading) {
       document.body.classList.add("bg-success");
       return (
@@ -141,6 +220,8 @@ export default class App extends Component {
       );
     }
     if (!sesion) {
+      document.body.classList.remove("bg-success");
+
       return (
         <Router>
           <Navbar />
@@ -151,9 +232,9 @@ export default class App extends Component {
             <Route path='/calculator'>
               <Calculator />
             </Route>
-            {/* <Route path='/plans'>
-            <Prices />
-          </Route> */}
+            <Route path='/plans'>
+              <Prices />
+            </Route>
             <Redirect to='/' />
           </Switch>
         </Router>
