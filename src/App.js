@@ -146,7 +146,6 @@ export default class App extends Component {
                   ],
                   anuncios: false,
                   invalid: 0,
-                  lastWeek: [],
                   skip: 0,
                   sqb: 0,
                 },
@@ -251,6 +250,7 @@ export default class App extends Component {
                 }}
                 anuncios={this.state.anuncios}
                 res={this.state.data}
+                lastWeek={this.state.history}
                 loading={this.state.loading}
                 error={this.state.error}
                 status={this.state.status}

@@ -14,13 +14,13 @@ import NotFoundClose from "./NotFoundClose";
 import { development, production, register } from "../environment";
 let web = development;
 if (process.env.NODE_ENV === "production") {
+  web = production;
 }
-web = production;
 
 export default class User extends Component {
   state = {
     _id: "",
-    Hours: 0,
+    Hours: 0.0,
     update: "",
     lastWeek: {},
     payout: "$0.00",
@@ -66,7 +66,7 @@ export default class User extends Component {
   }
 
   getUser = () => {
-    const { res, error, status, anuncios } = this.props;
+    const { res, error, status, anuncios, lastWeek } = this.props;
     if (error) {
       const message = error;
       if (message === "Membresia Expirada") {
@@ -127,17 +127,17 @@ export default class User extends Component {
         date: user.annoucements[0].date,
       },
     });
-    if (user.lastWeek[0]) {
+    if (lastWeek[0]) {
       this.setState({
-        total: `$${user.lastWeek[0].total}`,
+        total: `$${lastWeek[0].total}`,
         lastWeek: {
-          bonus: user.lastWeek[0].bonus,
-          extra: user.lastWeek[0].extra,
-          hours: this.dot(user.lastWeek[0].hours),
-          quality: user.lastWeek[0].quality,
-          speed: user.lastWeek[0].speed,
-          payout: user.lastWeek[0].payout,
-          total: user.lastWeek[0].total,
+          bonus: lastWeek[0].bonus,
+          extra: lastWeek[0].extra,
+          hours: this.dot(lastWeek[0].hours),
+          quality: lastWeek[0].quality,
+          speed: lastWeek[0].speed,
+          payout: lastWeek[0].payout,
+          total: lastWeek[0].total,
         },
       });
     }
