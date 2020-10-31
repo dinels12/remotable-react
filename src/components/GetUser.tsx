@@ -8,7 +8,7 @@ import { REGISTER } from "../environment";
 // 5e737df650fb650032e31bae
 
 const USER_LOGIN = gql`
-  mutation userLogin($id: ID) {
+  mutation userLogin($id: ID!) {
     userLogin(_id: $id) {
       error
       message
