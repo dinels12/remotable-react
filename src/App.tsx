@@ -34,7 +34,7 @@ const App = () => {
 
   if (!login) {
     document.body.classList.add("bg-success");
-    localStorage.setItem("state", "on");
+    localStorage.setItem("status", "Online");
 
     return (
       <Router>
