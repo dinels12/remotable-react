@@ -29,7 +29,7 @@ const Anuncio = (props: Props) => {
         <p>{props.list.body}</p>
       </Modal.Body>
       <Modal.Footer>
-        <div>{moment(props.list.date).format("LL")}</div>
+        <div>{moment(parseFloat(props.list.date)).format("LL")}</div>
         <Button onClick={props.onHide}>Cerrar</Button>
       </Modal.Footer>
     </Modal>
