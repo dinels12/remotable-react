@@ -1,5 +1,3 @@
-// @ts-check
-
 import * as firebase from "firebase/app";
 import "firebase/analytics";
 

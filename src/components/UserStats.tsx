@@ -2,9 +2,22 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Stats from "./Charts";
 import { Button } from "react-bootstrap";
+import { PayoutInterface } from "../interface";
+
+interface State {
+  history: PayoutInterface[];
+  quality: any;
+  speed: any;
+  hours: any;
+  total: any;
+  show: boolean;
+  selected: any;
+  loading: boolean;
+  nameSelected: string;
+}
 
 export default class UserStats extends Component {
-  state = {
+  state: State = {
     history: [],
     quality: [],
     speed: [],
@@ -13,10 +26,14 @@ export default class UserStats extends Component {
     show: false,
     selected: [],
     loading: true,
+    nameSelected: "",
   };
 
   componentDidMount() {
-    this.setState({ history: this.props.history });
+    this.setState({
+      history: JSON.parse(localStorage.getItem("history") || "[]"),
+    });
+    // @ts-ignore
     this.update = setInterval(() => {
       this.setState({
         quality: this.getQuality(),
@@ -28,38 +45,39 @@ export default class UserStats extends Component {
   }
 
   componentWillUnmount() {
+    // @ts-ignore
     clearInterval(this.update);
   }
 
   getQuality() {
     const { history } = this.state;
-    return history.map((data) => {
-      return { x: new Date(data.date), y: data.quality };
+    return history.map((data: any) => {
+      return { x: new Date(parseFloat(data.date)), y: data.quality };
     });
   }
 
   getSpeed() {
     const { history } = this.state;
-    return history.map((data) => {
-      return { x: new Date(data.date), y: data.speed };
+    return history.map((data: any) => {
+      return { x: new Date(parseFloat(data.date)), y: data.speed };
     });
   }
 
   getHours() {
     const { history } = this.state;
-    return history.map((data) => {
-      return { x: new Date(data.date), y: data.hours };
+    return history.map((data: any) => {
+      return { x: new Date(parseFloat(data.date)), y: data.hours };
     });
   }
 
   getTotal() {
     const { history } = this.state;
-    return history.map((data) => {
-      return { x: new Date(data.date), y: data.total };
+    return history.map((data: any) => {
+      return { x: new Date(parseFloat(data.date)), y: data.total };
     });
   }
 
-  selectType = (name) => {
+  selectType = (name: string) => {
     const { hours, quality, speed, total } = this.state;
     if (name === "hours") {
       this.setState({ selected: hours, nameSelected: "Horas" });
@@ -78,7 +96,7 @@ export default class UserStats extends Component {
   render() {
     const { show } = this.state;
     return (
-      <div id={this.state._id} className='container'>
+      <div className='container'>
         <div className='row'>
           <div id='hoursTable' className='col m-auto'>
             <div className='card remoColor'>
