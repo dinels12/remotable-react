@@ -17,6 +17,13 @@ const NavBar = () => {
           <NavLink to='/plans' className='nav-link'>
             Planes
           </NavLink>
+          <a
+            rel='stylesheet'
+            className='nav-link'
+            href='https://docs.google.com/forms/d/e/1FAIpQLSdyjxg2IdAt8yn7F5J0PY4RnfMJAO7a-9M0nyknXznSInDyNQ/viewform'
+          >
+            Registro Gratis!
+          </a>
         </Nav>
       </div>
     </Navbar>
