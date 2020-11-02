@@ -74,7 +74,7 @@ interface Response {
 const User = () => {
   const { loading, error: errors, data } = useQuery(GET_USER, {
     variables: { id: localStorage.getItem("_id") },
-    pollInterval: 500,
+    pollInterval: 5000,
   });
   const [updateUser] = useMutation(UPDATE_USER);
   const [state, setState] = useState<State>({
