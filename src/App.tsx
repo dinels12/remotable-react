@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import UserInfo from "./components/User";
 import Calculator from "./components/Calculator";
-import Prices from "./components/Prices";
+// import Prices from "./components/Prices";
 import GetUser from "./components/GetUser";
 import UserHistory from "./components/UserHistory";
 import UserStats from "./components/UserStats";
@@ -39,10 +39,10 @@ const App = () => {
     return (
       <Router>
         <Switch>
-          <Route exact path='/' component={UserInfo} />
-          <Route path='/history' component={UserHistory} />
-          <Route path='/stats' component={UserStats} />
-          <Redirect to='/' />
+          <Route exact path="/" component={UserInfo} />
+          <Route path="/history" component={UserHistory} />
+          <Route path="/stats" component={UserStats} />
+          <Redirect to="/" />
         </Switch>
       </Router>
     );
@@ -52,10 +52,10 @@ const App = () => {
     <Router>
       <Navbar />
       <Switch>
-        <Route exact path='/' component={GetUser} />
-        <Route path='/calculator' component={Calculator} />
-        <Route path='/plans' component={Prices} />
-        <Redirect to='/' />
+        <Route exact path="/" component={GetUser} />
+        <Route path="/calculator" component={Calculator} />
+        {/* <Route path='/plans' component={Prices} /> */}
+        <Redirect to="/" />
       </Switch>
     </Router>
   );
