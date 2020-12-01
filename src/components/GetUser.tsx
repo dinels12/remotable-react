@@ -112,7 +112,7 @@ const GetUser = () => {
 
   return (
     <div>
-      <div id='formConsult' className='col-6 m-auto'>
+      <div id="formConsult" className="col-6 m-auto">
         {expired ? (
           <Expired
             show={expired}
@@ -128,29 +128,29 @@ const GetUser = () => {
             <NotFoundClose show={notFound} onHide={() => notFoundHide()} />
           )
         ) : null}
-        <div className='card remoColor'>
-          <div className='card-header'>
+        <div className="card remoColor">
+          <div className="card-header">
             <h1>Consultar la tabla</h1>
           </div>
-          <div className='card-body'>
+          <div className="card-body">
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div className='form-group'>
-                <label htmlFor='usrId'></label>
+              <div className="form-group">
+                <label htmlFor="usrId"></label>
                 Introduzca su ID
                 <input
-                  id='usrId'
-                  name='id'
-                  type='text'
+                  id="usrId"
+                  name="id"
+                  type="text"
                   ref={register}
-                  className='form-control'
-                  placeholder='Introduce tu ID'
+                  className="form-control"
+                  placeholder="Introduce tu ID"
                   autoFocus
                 />
               </div>
               <button
                 ref={message}
-                className='btn btn-primary btn-block'
-                type='submit'
+                className="btn btn-primary btn-block"
+                type="submit"
               >
                 {state.message}
               </button>

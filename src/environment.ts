@@ -1,3 +1,3 @@
-export const development = "http://localhost:4000/graphql";
-export const production = "https://desition.herokuapp.com/graphql";
-export const REGISTER = "close";
+export const development: string = "http://localhost:4000/graphql";
+export const production: string = "https://desition.herokuapp.com/graphql";
+export const REGISTER: string = "close";
