@@ -10,14 +10,14 @@ interface Props {
 export const NotFoundOpen = (props: Props) => {
   return (
     <Modal
-      size='lg'
+      size="lg"
       centered
       show={props.show}
       onHide={() => props.onHide()}
-      aria-labelledby='contained-modal-title-vcenter'
+      aria-labelledby="contained-modal-title-vcenter"
     >
       <Modal.Header closeButton>
-        <Modal.Title id='contained-modal-title-vcenter'>
+        <Modal.Title id="contained-modal-title-vcenter">
           <div>Unete a la comunidad de RemoTable!</div>
         </Modal.Title>
       </Modal.Header>
@@ -56,19 +56,21 @@ export const NotFoundOpen = (props: Props) => {
 export const NotFoundClose = (props: Props) => {
   return (
     <Modal
-      size='lg'
+      size="lg"
       centered
       show={props.show}
       onHide={() => props.onHide()}
-      aria-labelledby='contained-modal-title-vcenter'
+      aria-labelledby="contained-modal-title-vcenter"
     >
       <Modal.Header closeButton>
-        <Modal.Title id='contained-modal-title-vcenter'>
-          <div>Registros Cerrados!</div>
+        <Modal.Title id="contained-modal-title-vcenter">
+          <div>Aplicacion descontinuada!</div>
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p>Por los momentos tenemos los registros cerrados.</p>
+        <p>
+          Hemos descontinuado el soporte a esta aplicacion, gracias por usarla.
+        </p>
       </Modal.Body>
       <Modal.Footer>
         <div>{moment(Date.now()).format("LL")}</div>
